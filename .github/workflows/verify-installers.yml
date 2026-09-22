@@ -2,7 +2,7 @@ name: Verify Windows installer
 on:
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
   install-and-open:
     runs-on: windows-2022
