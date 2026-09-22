@@ -1,0 +1,22 @@
+name: Verify Windows installer
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  install-and-open:
+    runs-on: windows-2022
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download candidate installer
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download v0.1.0-preview.1 --repo khronoyeon/autoedit-downloads --pattern AutoEdit-0.1.0-win-x64.exe --dir installer
+      - name: Install and verify bundled tools and app
+        run: ./verify-windows.ps1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windows-installation-check
+          path: '*.log'
