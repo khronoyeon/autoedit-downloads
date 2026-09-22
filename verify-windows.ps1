@@ -1,4 +1,5 @@
 $ErrorActionPreference = 'Stop'
+if ((Get-FileHash "$PWD\installer\AutoEdit-0.1.0-win-x64.exe" -Algorithm SHA256).Hash -ne 'a2f0d13a89c25bface56bd099496ec50da388c4eab07564b2d5b3f7567542f44') { throw 'Installer checksum mismatch' }
 $setup = Start-Process -FilePath "$PWD\installer\AutoEdit-0.1.0-win-x64.exe" -ArgumentList '/S' -Wait -PassThru
 if ($setup.ExitCode -notin @(0,3010)) { throw "Installer failed: $($setup.ExitCode)" }
 $appRoot = Join-Path $env:ProgramFiles 'AutoEdit'
